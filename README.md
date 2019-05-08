@@ -2,10 +2,10 @@
   <img alt="Logo" src="https://github.com/CourseNotesBTH/DV1592/raw/master/logo.png">
 </p>
 
-DV1587 - Network Security 2 (SECOPS)
+DV1592 - Digital investigation techniques and digital evidence (forensics)
 ======
 
-Course notes and the like for DV1592 - Digital investigation techniques and digital evidence (forensics)
+Course notes and the like for DV1592 - Digital investigation techniques and digital evidence (forensics) (forensics)
 
 [More courses](https://github.com/CourseNotesBTH) <br />
 See also [Programming Courses at BTH](https://github.com/ProgrammingCoursesBTH)
