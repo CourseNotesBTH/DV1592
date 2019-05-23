@@ -39,6 +39,7 @@ There are some different type of files that you may come across in each course n
 | --------- | :----: | ----------- |
 | Course notes.md | ⚠️  🇸🇪  | Course notes from lectures held in 2019. Requires Typora or any other Markdown & MathJax compatible editor |
 | Course notes.pdf | ⚠️  🇸🇪  | Rendered version of the same file |
+| Example Exam.pdf | 🇸🇪 | Example exam from 2019 |
 
 # Purpose of the repository
 <a name="purpose"></a>
