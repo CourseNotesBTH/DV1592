@@ -37,10 +37,10 @@ There are some different type of files that you may come across in each course n
 
 | File name | Labels | Description |
 | --------- | :----: | ----------- |
-| Course notes.md | ⚠️  🇸🇪  | Course notes from lectures held in 2019. Requires Typora or any other Markdown & MathJax compatible editor |
-| Course notes.pdf | ⚠️  🇸🇪  | Rendered version of the same file |
-| Cheat Sheet.md | ⚠️ 🇸🇪 | Everything you need to parse the exam in one paper. Based on previous exams and lectures. Requires Typora or any other Markdown & MathJax compatible editor |
-| Cheat Sheet.pdf | ⚠️ 🇸🇪 | Rendered version of the same file |
+| Course notes.md | 🇸🇪  | Course notes from lectures held in 2019. Requires Typora or any other Markdown & MathJax compatible editor |
+| Course notes.pdf | 🇸🇪  | Rendered version of the same file |
+| Cheat Sheet.md | 🇸🇪 | Everything you need to parse the exam in one paper. Based on previous exams and lectures. Requires Typora or any other Markdown & MathJax compatible editor |
+| Cheat Sheet.pdf | 🇸🇪 | Rendered version of the same file |
 | Example Exam.pdf | 🇸🇪 | Example exam from 2019 |
 | Example Exam 2.pdf | 🇸🇪 | Example exam likely from 2018 |
 | Example Exam 3.pdf | 🇸🇪 | Example exam likely from 2018 |

@@ -94,7 +94,7 @@ Att översätta "ettor och nollor" till något förståeligt. Det finns idag ing
 
 ## Filsystem
 
-Filsystems uppgift är att lagra data. Olika operativsystem har olika tillvägagångsätt och sparar olika metadata. De flersta filsystem har en hierkisk princip. Andra har grafer eller strömmar. Man brukar ha metoder för att skapa, läsa, modifiera, ta bort och flytta data.
+Filsystems uppgift är att lagra data. Olika operativsystem har olika tillvägagångsätt och sparar olika metadata. De flesta filsystem har en hierkisk princip. Andra har grafer eller strömmar. Man brukar ha metoder för att skapa, läsa, modifiera, ta bort och flytta data.
 
 ### Partitioner
 
@@ -107,6 +107,12 @@ Master Boot Record (MBR), Guided Partition Table (GPT). MBR har fyra partitioner
 ![image-20190403133436753](/Users/alexgustafsson/Library/Application Support/typora-user-images/image-20190403133436753.png)
 
 En hårddisk består av cylindrar. Varje cylinder har ett läs-/skrivhuvud. Dessa cylindrar roterar runt och huvudena rör sig fram och tillbaka längs med radien av cylinderna. När data läses så läses den i block. Ett blocks storlek varierar.
+
+### SSD
+
+Emulerar en HDD.
+
+Transistorer som har olika nivåer av ström. Nivåerna delas in i ett antal värden som tolkas som bitar.
 
 ### FAT
 
@@ -137,6 +143,28 @@ En kopia av \$MFT finns i \$MFTMIRR - men den är inte komplett. Den innehåller
 ### Data som bevis
 
 När man gör en fullständig dumpning av en hårddisk används antingen s.k. *e0* eller *dd*. För dd gör man en checksumma på hela disken. Filer man tar ut ur kopior hashas och kan sparas i databaser för exempelvis BP. Det går även att jämföra filer med vanliga system för att exkludera standardfiler. Man använder alltså checksummor för att slippa se viss känslig data och för att visa att filen inte förändrats från källan. En e0-kopia innehåller hashsummor från filsystemet, men vanligtvis använder man dd utöver detta.
+
+### RAID
+
+Redundant Array of Inexpensive Disks / Reduntant Array of Independent Disks.
+
+Koppla ihop flera diskar för att förbättra prestanda eller driftsäkerhet.
+
+#### RAID 0
+
+Striped. Sätt ihop diskar logiskt för att få en större disk. Data skrivs till diskarna i tur och ordning. Block A hamnar på disk 1, B på disk 2, C på disk 3 o.s.v.
+
+#### RAID 1
+
+Mirrroring. Används för redundans. Två diskar innehåller samma sak.
+
+#### RAID 0+1
+
+Använder fyra diskar. Två par av redundanta diskar.
+
+#### RAID 5
+
+Använder fem diskar, minst tre måste användas. För ett block används fyra diskar för raid 0, en disk för paritet. Med den datan kan man återskapa en disk om den går förlorad.
 
 ## Verktyg
 
@@ -392,6 +420,8 @@ Metadata för processer inkluderar namn på process, startadress i minnet, PID, 
 
 Processen `svchost.exe` har med massvis att göra - nätverk, minneshantering etc.
 
+För processer jämför man en användares SIDs med processens. Om en användare inte har SIDn som används i processen som startats av användaren är det en anomali. Antagligen har processen fått ett högre privilegium än användaren.
+
 #### Volatility
 
 ```
@@ -406,6 +436,24 @@ volatility -f Win7.raw --profile [profile] psscan winlogon.exe
 
 # Leta efter processer som har med nätverk att göra
 volatility -f Win7.raw --profile [profile] netscan
+
+# Leta efter SIDs och deras koppling till processer
+volatility -f Win7.raw --profile [profile] getsids
+
+# Leta efter processer som körde kommandon (möjlig inväg vid attack)
+volatility -f Win7.raw --profile [profile] cmdscan
+
+# Third Party-modul. Hitta kommandon som kördes
+volatility -f Win7.raw --profile [profile] cmdline -p [PID]
+
+# List DLLs and paths
+volatility -f Win7.raw --profile [profile] dlllist
+
+# Dump a process
+volatility -f Win7.raw --profile [profile] procdump -p [PID] -D [output-folder]
+
+# Dump a process's memory
+volatility -f Win7.raw --profile [profile] memdump -p [PID] -D [output-folder]
 ```
 
 Om volatiltiy inte hittar någon starting point (No PAE), så misslyckades sannolikt analysen. Antagligen skapades minnesfilen på ett felaktigt sätt.
@@ -416,3 +464,116 @@ Vissa virus modiferar datan i processträdet genom att plocka bort fält så som
 
 För att se om en process är legitim (exempelvis om namnet är "chrome.exe") bör man se till PPID.
 
+## Incident response
+
+1. Preperation
+2. Identification
+3. Containment
+4. Eradication
+5. Recovery
+6. Follow up - lessons learned
+
+## Android Forensics
+
+- Collection - samla in data från mobiler, SIM-kort etc.
+- Harvesting - leta efter saker som är lätt att hitta
+- Reduction - ta bort kända filer / rensa upp
+- Identification - identifiera insamlad data
+- Acquisition - extrahera data från enheter
+- Preservation - se till att bevisen är säkrade (säkra integritet)
+- Examination and Analysis - sök, filtrera, examinera
+- Reporting - dokumentera bevisen
+
+### Intressepunkter
+
+* Bilder
+* Kontakter
+* SMS / MMS
+* Filmer
+* GPS-koordinater för bilder / filmer
+* Applikationer (Skype  etc.)
+* Samtalshistorik
+
+## Anti-forensics
+
+Man kan förstöra data, gömma data eller gör andra förebyggande åtgärder för att hindra forensiska undersökningar.
+
+* Data hiding
+* Artifact wiping
+* Trail obfuscation
+* Attack against CF tools / processes
+
+## Browser forensics
+
+Webbläsare sparar olika saker. De använder inte samma tidsstämplar. De brukar alla använda UTC. Internet Explorer använder 1601-01-01, Firefox 1970-01-01, Chrome 1601-01-01, Safari 2001-01-01 och Opera 1970-01-01 som start för epochen.
+
+De brukar spara data i Windows registry - typed URLs, historik m.m.
+
+## Recycler.bin
+
+Papperskorgen skiljer sig mellan olika filsystem. UNIX har ett användarsystem, Windows har NTFS och FAT. I FAT finns inga ägare - de delar papperskorg. De har olika namn på "mappen". I NTFS finns en fil, INFO2 som innehåller användarens SID. På så vis kan bara ägaren återställa en fil i papperskorgen. Endast användaren Backup kan ändra rättigheter. Recycler.bin finns normalt i roten på filsystemet för NTFS. För FAT heter den RECYCLER.
+
+## Web
+
+Att "tröska" genom mängder av webbdata är mycket svårt. Det finns verktyg så som "website archive", "website watcher" och "archive.org" som kan arkivera eller visa arkiv av webbsidor. Website watcher automatiserar / "spindlar" en webbsida för att extrahera data över tid. Kan användas för att leta stulet gods etc.
+
+## Cloud Forensics
+
+Det finns flera dimensioner av problemet. Dels juridiska problem - man kan få tillgång till en VM genom domslut, men hur ska man gå till väga vid analys av hosten? Dumpar man minne får man ju tillgång till alla gäster på systemet, vilket inte är önskvärt.
+
+Ett annat problem kan vara stora nätverk där det är många VMs som används i en tjänst. De ser likadana ut och fungerar på samma sätt. Om en blir hackad, hur utför man en analys? Vilken fysisk maskin kör den virtuella maskinen? Svårt att veta vart saker körs.
+
+När man arbetar med VM kan man ta en snapshot och klona VM:en. Man kan sidan göra om disken och arbeta med den genom att använda traditionella verktyg.
+
+Efter GDPR har vissa implementerat "One Button Take Out" som innebär att ett företag enkelt kan lämna en molntjänst så som IBM.
+
+Vidare körs vissa tjänster som containrar.
+
+## Inför tentamen
+
+**Notera:** se "Example Exam.pdf" på GitHub.
+
+Frågor är kunskapsfrågor - kan du den här termen? En annan typ är utredande - förklara / diskutera vad static forensic är.
+
+Uppgifter med höga poäng aver besvaras med mycket text.
+
+### Filer
+
+En fil finns på många olika sätt. Den kan ligga i disken, vara borttagen, vara skickad som mejl. En bild kan ha ursprung i en RAW-fil, men konverterats till JPEG. Det kan finnas temporära verioner av filen, backup etc. Detta gör att vi kan hitta variationer, versioner och återskapa filer.
+
+Metadata för filer inkluderar *MAC* - modified, accessed, created. Frågor man får ställa sig är om tidstämpeln är inodens ändringsdatum eller filens. Annan metadata inkluderar eventuella program som använts (så som PDF). För bilder finns EXIF som kan innehålla kamera, objektiv, slutartid, färgdjup, GPS-koordinater m.m. Word-filer kan innehålla vem som har skapat filen, ändringar m.m. Gamla versioner hade till och med MAC-adresser lagrade. Filer kan spara dess ursprung så som URL.
+
+Ljudfiler kan ha album, spårlängd, spårnummer m.m.
+
+## Metoder
+
+* Live forensic
+* Static forensic
+* Network forensic
+* Cloud forensic
+
+Kunna diskutera och placera följande metodik i ordning. 
+
+1. Time analysis
+2. Harvesting
+3. Reconstruction
+4. Reduction
+5. Carving
+6. Preservation
+7. Recovery
+8. Report
+9. Analysis
+
+### Rapport
+
+Tre nyckelpunkter
+
+* Objektivitet / ingen brottsrubricering
+* Lättförståelig / anpassad till läsaren
+* Utförlig analys, men ändå relevant
+
+### Modus Operandi
+
+Tillvägagångssätt / beteende - hur en gärningsman handlar.
+
+Kan bestå av hur personen uttrycker sig, vilka metoder de använder och hur de avser tjäna pengar.
