@@ -519,11 +519,12 @@ I NTFS finns papperskorgen mappen normalt i roten på filsystemet. Men beroende 
 
 I Windows XP lagras "raderade" filer i mappen "Recycler" under användarens specifika SID. Det finns också en INFO2-fil som innehåller ett index över alla filer som har tagits bort, tillsammans med metadata om de "raderade" filerna.
 
-I Windows Vista och nyare lagras "raderade" filer i mappen "$Recycle.Bin". För varge "raderad" fil skapsa två filer den ena startar med ”$R” följt av en random sträng och den andra startar med ”$I” följt av samma sträng. ”$R” innehåller data som ”raderats” och ”$I” innehåller metadata. Med hjälp av dessa filer så är det bara ägaren av en fil som kan återställa den. 
+I Windows Vista och nyare lagras "raderade" filer i mappen "\$Recycle.Bin". För varje "raderad" fil skapas två filer. Den ena startar med "\$R" följt av en slumpmässig sträng och den andra startar med ”​\$I” följt av samma sträng. "\$R" innehåller data som "raderats" och "$I" innehåller metadata. Med hjälp av dessa filer så är det bara ägaren av en fil som kan återställa den. 
 
 Endast användaren Backup kan ändra rättigheter.
 
-Source: <https://www.magnetforensics.com/blog/artifact-profile-recycle-bin/
+Anteckningarna från föreläsningen har utökats med information från:
+https://www.magnetforensics.com/blog/artifact-profile-recycle-bin/
 
 ## Web
 
