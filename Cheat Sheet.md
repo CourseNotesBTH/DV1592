@@ -18,6 +18,10 @@ På grund av fragmentering av disken kan viss plats slösas.
 
 När en fil sparas på en disk brukar den sparas i ett eller flera *kluster* - en samling kontinuerliga *sektorer* på disken. Vanligtvis så kommer filens storlek inte att vara exakt lika med storleken av klustrena och då kommer viss plats i ett kluster att förbli oanvänt. Denna oanvända yta kallas för *slack space*.
 
+**HPA (host protected area):**
+
+En bit av hårddisken som inte är synlig för operativsystemet. Här kan det gömmas data och program. 
+
 ### Filsystem
 
 *Svar från föreläsningar.*
