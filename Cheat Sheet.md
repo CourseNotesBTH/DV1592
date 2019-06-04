@@ -202,17 +202,15 @@ Vidare körs vissa tjänster som containrar.
 Observera att ordningen är något tvetydig.
 
 1. Collection - samla in data från mobiler, SIM-kort etc.
-2. Carving - hitta borttagna filer etc.
-3. Harvesting - leta efter saker som är lätt att hitta
-4. Reduction - ta bort kända filer / rensa upp
-5. Identification - identifiera insamlad data
-6. Acquisition - extrahera data från enheter
-7. Reconstruction - återskapa data från borttagna filer, slack space etc.
-8. Preservation - se till att bevisen är säkrade (säkra integritet)
-9. Examination and Analysis - sök, filtrera, examinera
-10. Time Analysis - bygg upp en tidslinje över bevis
-11. Recover - Säkerställ att enheten fungerar som tidigare om den infekterats
-12. Reporting - dokumentera bevisen
+2. Preservation - se till att bevisen är säkrade (säkra integritet)
+3. Recover - kolla soptunnan. 
+4. Carving - hitta borttagna filer etc.
+5. Reduction - ta bort kända filer / rensa upp
+6. Harvesting - leta efter saker som är lätt att hitta
+7. Identification - identifiera insamlad data
+8. Examination and Analysis - sök, filtrera, examinera
+9. Reconstruction / Time Analysis - bygg upp en tidslinje över bevis
+10. Reporting - dokumentera bevisen
 
 ## Rapportskrivning
 
