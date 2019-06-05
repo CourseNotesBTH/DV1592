@@ -511,7 +511,14 @@ De brukar spara data i Windows registry - typed URLs, historik m.m.
 
 ## Recycler.bin
 
-Papperskorgen skiljer sig mellan olika filsystem. UNIX har ett användarsystem, Windows har NTFS och FAT. I FAT finns inga ägare - de delar papperskorg. De har olika namn på "mappen". I NTFS finns en fil, INFO2 som innehåller användarens SID. På så vis kan bara ägaren återställa en fil i papperskorgen. Endast användaren Backup kan ändra rättigheter. Recycler.bin finns normalt i roten på filsystemet för NTFS. För FAT heter den RECYCLER.
+Papperskorgen skiljer sig mellan olika filsystem. UNIX har ett användarsystem. I FAT heter papperskorgen "RECYCLER" och det finns inga ägare till filer så de delar papperskorgen. I NTFS finns papperskorgen mappen normalt i roten på filsystemet. Men beroende på vilken version av Windows som körs fungerar den på olika vis:
+
+I Windows XP lagras "raderade" filer i mappen "Recycler" under användarens specifika SID. Det finns också en INFO2fil som innehåller ett index över alla filer som har tagits bort, tillsammans med metadata om de "raderade" filerna.
+
+I Windows Vista och nyare lagras "raderade" filer i mappen "\$Recycle.Bin". För varje "raderad" fil skapas två filer. Den ena startar med "\$R" följt av en slumpmässig sträng och den andra startar med ”\$I” följt av samma sträng. "\$R" innehåller data som "raderats" och "$I" innehåller metadata. Med hjälp av dessa filer så är det bara ägaren av en fil som kan återställa den. Endast användaren Backup kan ändra rättigheter.
+	
+Anteckningarna från föreläsningen har utökats med information från:
+https://www.magnetforensics.com/blog/artifactprofilerecyclebin/
 
 ## Web
 

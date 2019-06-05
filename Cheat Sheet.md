@@ -80,6 +80,17 @@ Det finns 16 bitar i adressen för FAT16 och 32 för FAT32. Vissa bitar används
 
 Först i disken (block noll, cylinder noll, sektor noll) finns *Master Boot Record* (MBR). Efter MBR finns *Boot Record* (BR). Efter BR finns FAT-tabellen (med ev. kopior). 
 
+## Recycler.bin
+
+Papperskorgen skiljer sig mellan olika filsystem. UNIX har ett användarsystem. I FAT heter papperskorgen "RECYCLER" och det finns inga ägare till filer så de delar papperskorgen. I NTFS finns papperskorgen mappen normalt i roten på filsystemet. Men beroende på vilken version av Windows som körs fungerar den på olika vis:
+
+I Windows XP lagras "raderade" filer i mappen "Recycler" under användarens specifika SID. Det finns också en INFO2fil som innehåller ett index över alla filer som har tagits bort, tillsammans med metadata om de "raderade" filerna.
+
+I Windows Vista och nyare lagras "raderade" filer i mappen "\$Recycle.Bin". För varje "raderad" fil skapas två filer. Den ena startar med "\$R" följt av en slumpmässig sträng och den andra startar med ”\$I” följt av samma sträng. "\$R" innehåller data som "raderats" och "$I" innehåller metadata. Med hjälp av dessa filer så är det bara ägaren av en fil som kan återställa den. Endast användaren Backup kan ändra rättigheter.
+	
+Anteckningarna från föreläsningen har utökats med information från:
+https://www.magnetforensics.com/blog/artifactprofilerecyclebin/
+
 ## Data som bevis
 
 *Svar från föreläsningar.*
